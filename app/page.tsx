@@ -8,7 +8,7 @@ const NotificationListener = () => {
   const [notification, setNotification] = useState<string>("");
 
   useEffect(() => {
-    const newSocket = io("https://server-3-gl8x.onrender.com/");
+    const newSocket = io("https://server-3-gl8x.onrender.com");
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
@@ -18,9 +18,7 @@ const NotificationListener = () => {
     newSocket.on('notification', (senderSocketId: string) => {
       console.log('Received notification from:', senderSocketId);
 
-      // Check if the notification is not from the current socket
       if (senderSocketId !== newSocket.id) {
-        // Handle the notification logic here
         setNotification("You got a notification");
       }
     });
@@ -32,16 +30,13 @@ const NotificationListener = () => {
 
   const sendNotification = () => {
     if (socket) {
-      // Emit a 'notification' event to the server with the sender's socket ID
       socket.emit('notification', socket.id);
     }
   };
 
   return (
     <div>
-      {/* Button to send notification */}
       <button onClick={sendNotification}>Send Notification</button>
-      {/* Notification message */}
       {notification && <p>{notification}</p>}
     </div>
   );
