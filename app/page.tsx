@@ -8,7 +8,7 @@ const NotificationListener = () => {
   const [notification, setNotification] = useState<string>("");
 
   useEffect(() => {
-    const newSocket = io("http://localhost:3001");
+    const newSocket = io("https://server-1-b7aj.onrender.com/");
     setSocket(newSocket);
 
     newSocket.on('connect', () => {
